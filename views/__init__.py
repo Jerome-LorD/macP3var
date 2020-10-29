@@ -1,1 +1,1 @@
-"""init view Pygame"""
+"""init views"""

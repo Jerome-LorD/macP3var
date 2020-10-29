@@ -1,0 +1,43 @@
+from termcolor import colored
+
+SCREEN_SIZE = (600, 660)
+FPS = 30
+
+WIDTH = 15
+HEIGHT = 15
+
+
+WHITE = (255,255,255)
+BLACK = (0, 0, 0)
+GREEN = (0,255,0)
+RED = (255,0,0)
+
+
+WALL_RECT = (340,100,20,20)
+STARTPOL_RECT = (160,20,20,20)
+PLASTIC_TUBE_RECT = (0,0,259,194)
+ETHER_RECT = (0,0,225,225)
+NEEDLE_RECT = (0,0,545,720)
+SYRINGE_RECT = (0,0,90,90)
+CADRE_BOX_RECT = 0,603,600,53
+STANDARD_IMG_RECT = (0,0,40,40)
+
+CADRE_POS = (30,610)
+ETHER_POS = (455,610)
+NEEDLE_POS = (500,610)
+PLASTIC_TUBE_POS = (545,610)
+
+IMG_SIZE = (40, 40)
+IMG_HIDE_SIZE = (0, 0)
+
+START_CHAR = "s"
+WALL_CHAR = "W"
+ROAD_CHAR = " "
+FINNISH_CHAR = "f"
+PLAYER_CHAR = colored("@", "yellow")
+TUBE_CHAR = colored("$", "red")
+NEEDLE_CHAR = colored("%", "red")
+ETHER_CHAR = colored("#", "red")
+
+WINCLI = "Congats, You WIN"
+LOSECLI = "You lose, you die\nGAME OVER"

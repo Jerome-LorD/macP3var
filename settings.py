@@ -1,5 +1,16 @@
 from termcolor import colored
 
+from pathlib import Path
+
+BASE_DIR = Path(".")
+DATA_DIR = BASE_DIR / "data"
+FONT_DIR = DATA_DIR / "fonts"
+
+FONT_FILE = FONT_DIR / "Ranchers" / "Ranchers-Regular.ttf"
+
+IMG_DIR = DATA_DIR / "ressource"
+
+
 SCREEN_SIZE = (600, 660)
 FPS = 30
 

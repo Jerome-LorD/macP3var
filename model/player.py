@@ -18,5 +18,4 @@ class Player:
             self.pos = (pos_x + 1, pos_y)
         elif direction == "left":
             self.pos = (pos_x - 1, pos_y)
-
         return self.pos

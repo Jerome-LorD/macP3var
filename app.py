@@ -29,10 +29,8 @@ class Application:
 
     def run(self):
         """Run main method."""
-        # self.running = True
         running = True
         while running:
             self.view.display()
             control = self.controller.handle_control()
             self.model.update(control)
-        

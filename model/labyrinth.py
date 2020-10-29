@@ -1,7 +1,6 @@
 #! /usr/bin/python
 import random
 
-
 class Labyrinth:
     """doc str"""
 

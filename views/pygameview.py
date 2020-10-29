@@ -86,10 +86,3 @@ class PYView:
                 self.screen.blit(self.res[0],self.res[1])
                 
                 pg.display.flip()
-
-
-
-    
-
-
-

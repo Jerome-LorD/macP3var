@@ -24,7 +24,8 @@ W.W WWW
 W.....W.W.W.WW 
 W.WWW.WWW.W.W  
 ....W.....W.W W
-WWW.W.WWW.W.W f```
+WWW.W.WWW.W.W f
+```
 
 ## The MVC pattern
 

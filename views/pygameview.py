@@ -1,5 +1,4 @@
 import os
-import time
 
 import pygame as pg
 from pygame.locals import *

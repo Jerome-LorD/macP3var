@@ -10,7 +10,8 @@ of learning code with that formation : "developpeur d'application - python".
 
 For the first constraint, we had to show how to make the level structure :
 
-```.WWWWWW..W.WWW.
+```
+.WWWWWW..W.WWW.
         .W..W..
 WWW W W WWW.W.W
 W...W W       .

@@ -32,7 +32,7 @@ class Application:
     def run(self):
         """Run main method."""
 
-         while self.model.run:
+        while self.model.run:
             self.view.display()
             control = self.controller.handle_control()
             self.model.update(control)

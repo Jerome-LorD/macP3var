@@ -1,6 +1,7 @@
 .mypy_cache
 __pycache__
 .macp3var
+.venv
 .vscode
 bash.exe.stackdump
 macp3var.code-workspace

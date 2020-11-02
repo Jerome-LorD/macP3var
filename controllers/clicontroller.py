@@ -1,6 +1,6 @@
-
 class CLIController:
-    """Do only one thing for the moment: handle controls from input"""
+    """Handle controls from keyboard inputs"""
+
     def __init__(self, labyrinth):
         self.lab = labyrinth
 
@@ -8,15 +8,15 @@ class CLIController:
         """Manage all direction from input"""
         self.direction = ""
         board = ["up", "right", "down", "left", "q"]
-        try:        
-            self.direction = str(input("Chose the direction: "))
-        except ValueError:
-            print('Invalid input! Type character please.')
-            return True
+
+        self.direction = str(
+            input("Type the direction [right, left, up, down (q to quit)]-> ")
+        )
+
         if self.direction == "q":
             print("thx, until next time")
-            return False
+            self.lab.run = False
         if self.direction not in board:
             print("Command not in the board")
-            return True
+            self.lab.run = True
         return self.direction

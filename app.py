@@ -1,7 +1,9 @@
 import pygame
 from pygame.locals import *
-from model.player import Player
+
+import settings
 from model.labyrinth import Labyrinth
+from model.player import Player
 from views.cliview import CLIView
 from controllers.clicontroller import CLIController
 from views.pygameview import PYView
@@ -13,10 +15,10 @@ class Application:
 
     def __init__(self, choice: str):
         """Init."""
-        self.player = Player(0, 0)
-        self.model = Labyrinth("data/levels/maze.txt", self.player)
 
-        self.running = True
+        self.player = Player(0,0)
+        self.model = Labyrinth(settings.MAZE_FILE, self.player)
+        
         self.choice = choice
 
         if choice == "cli":
@@ -29,8 +31,8 @@ class Application:
 
     def run(self):
         """Run main method."""
-        running = True
-        while running:
+
+         while self.model.run:
             self.view.display()
             control = self.controller.handle_control()
             self.model.update(control)

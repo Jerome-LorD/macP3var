@@ -1,55 +1,64 @@
-import settings as const
+import settings
 
 
 class CLIView:
+    """Manage and display all prints"""
+
     def __init__(self, lab):
-        
+
         self.lab = lab
 
         self.pic = " "
-        self.run = 1
         self.items_taken = []
-        self.images = {"tube": const.TUBE_CHAR, "needle": const.NEEDLE_CHAR, "ether": const.ETHER_CHAR}
-
-
-    def you_win(self):
-        print(const.WINCLI)
-
-    def you_lose(self):
-        print(const.LOSECLI)
+        self.images = {
+            "tube": settings.TUBE_CHAR,
+            "needle": settings.NEEDLE_CHAR,
+            "ether": settings.ETHER_CHAR,
+        }
 
     def get_lst_items(self):
-        if len(self.items_taken) >= 1:
+        """docstr"""
+        if len(self.items_taken) >= 1 and not self.lab.player.pos == self.lab.finish[0]:
             print(f'In your possession -> {" ".join(self.items_taken)}')
-        if len(self.items_taken) == 3:
-            print("You got the syringe, you can get out -> \U0001F489")
+        if len(self.items_taken) == 3 and not self.lab.player.pos == self.lab.finish[0]:
+            print(f"You got the syringe, you can get out -> {settings.SYRINGE_UNICODE}")
 
-
+    def display_txt(self):
+        """Display texts in the bottom frame"""
+        if self.lab.collision_counter < 3 and self.lab.player.pos == self.lab.finish[0]:
+            print(settings.LOSECLI)
+        elif (
+            self.lab.collision_counter == 3
+            and self.lab.player.pos == self.lab.finish[0]
+        ):
+            print(settings.WINCLI)
+        else:
+            print("take all objects if you wanna get out.")
 
     def change_state(self):
+        """Get the images and manage the filling of items_taken"""
         for name in self.lab.items_states.keys():
             if self.lab.items_states[name] == "found":
                 self.lab.items_states[name] = "taken"
                 self.items_taken.append(self.images[name])
 
-
     def display(self):
-        print(self.lab.items_states)
-        for pos_y in range(const.WIDTH):
-            for pos_x in range(const.HEIGHT):
+        """Display the game"""
+        for pos_y in range(settings.WIDTH):
+            for pos_x in range(settings.HEIGHT):
                 position = pos_x, pos_y
 
                 if position == self.lab.player.pos:
-                    self.pic = const.PLAYER_CHAR
+                    self.pic = settings.PLAYER_CHAR
                 elif position == self.lab.items_position["tube"]:
-                    self.pic = const.TUBE_CHAR
+                    self.pic = settings.TUBE_CHAR
                 elif position == self.lab.items_position["needle"]:
-                    self.pic = const.NEEDLE_CHAR
+                    self.pic = settings.NEEDLE_CHAR
                 elif position == self.lab.items_position["ether"]:
-                    self.pic = const.ETHER_CHAR
+                    self.pic = settings.ETHER_CHAR
                 elif position in self.lab.wall:
                     self.pic = "X"
-                elif position in self.lab.start:
+                elif position == self.lab.start:
                     self.pic = "S"
                 elif position in self.lab.finish:
                     self.pic = "F"
@@ -60,8 +69,6 @@ class CLIView:
             print()
         print()
 
-        if self.lab.collision_counter < 3:
-            print("take all objects if you wanna get out.") 
-
         self.change_state()
         self.get_lst_items()
+        self.display_txt()

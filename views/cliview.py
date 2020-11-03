@@ -16,34 +16,54 @@ class CLIView:
             "ether": settings.ETHER_CHAR,
         }
 
-    def get_lst_items(self):
-        """docstr"""
-        if len(self.items_taken) >= 1 and not self.lab.player.pos == self.lab.finish[0]:
-            print(f'In your possession -> {" ".join(self.items_taken)}')
-        if len(self.items_taken) == 3 and not self.lab.player.pos == self.lab.finish[0]:
-            print(f"You got the syringe, you can get out -> {settings.SYRINGE_UNICODE}")
+    def display_items_taken(self):
+        """Display items and texts"""
+        items = [
+            item
+            for item, pos in self.lab.items_position.items()
+            if not self.lab.items_position[item]
+        ]
+        print(f"In your possession -> {' '.join(items)}")
 
-    def display_txt(self):
-        """Display texts in the bottom frame"""
-        if self.lab.collision_counter < 3 and self.lab.player.pos == self.lab.finish[0]:
-            print(settings.LOSECLI)
-        elif (
+        if (
+            self.lab.collision_counter == 3
+            and not self.lab.player.pos == self.lab.finish[0]
+        ):
+            print(f"{settings.GOT_SYRINGE} {settings.SYRINGE_UNICODE}")
+        if (
+            self.lab.collision_counter < 3
+            and self.lab.player.pos == self.lab.finish[0]
+        ):
+            print(settings.LOSECLI)        
+            self.lab.run = False
+        # if self.lab.lose == True:
+
+            
+        if (
             self.lab.collision_counter == 3
             and self.lab.player.pos == self.lab.finish[0]
         ):
-            print(settings.WINCLI)
-        else:
+            print(settings.WINCLI)        
+            self.lab.run = False
+
+
+        if (
+            self.lab.collision_counter < 3
+            and not self.lab.player.pos == self.lab.finish[0]
+        ):
             print("take all objects if you wanna get out.")
 
-    def change_state(self):
-        """Get the images and manage the filling of items_taken"""
-        for name in self.lab.items_states.keys():
-            if self.lab.items_states[name] == "found":
-                self.lab.items_states[name] = "taken"
-                self.items_taken.append(self.images[name])
+    def header(self):
+        self.dashes = "# ------------------------- #"
+        print(
+            f"\n{self.dashes}\n#-MacGyver -- Get out vc-1 -#\n\
+{self.dashes}"
+        )
 
     def display(self):
         """Display the game"""
+        self.header()
+
         for pos_y in range(settings.WIDTH):
             for pos_x in range(settings.HEIGHT):
                 position = pos_x, pos_y
@@ -69,6 +89,4 @@ class CLIView:
             print()
         print()
 
-        self.change_state()
-        self.get_lst_items()
-        self.display_txt()
+        self.display_items_taken()

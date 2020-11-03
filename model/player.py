@@ -1,12 +1,10 @@
 #! /usr/bin/python
-# import settings
-# from . import labyrinth
+
 
 class Player:
     """Manage player's position from keyboard inputs."""
 
     def __init__(self, x, y):
-        # self.pos = labyrinth.Labyrinth(settings.MAZE_FILE, self).start
         self.pos = x, y
 
     def __eq__(self, other):

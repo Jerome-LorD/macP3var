@@ -2,13 +2,6 @@
 import random
 
 
-class Item:
-    """Keep the state of items"""
-    def __init__(self, name, pos):
-        self.name = name
-        self.position = pos
-        # self.item_state = "found"
-
 
 class Labyrinth:
     """Create the labyrinth and randomize the position of certains elements"""
@@ -25,22 +18,15 @@ class Labyrinth:
         self._start = []
         self._finish = []
         self.items = []
-        self.rand_start = {"start": "position"}
-
-        self.new_items = {"tube": (), "needle": (), "ether": ()}
+        self.rand_start = {"start": ()}
         self.items_position = {"tube": (), "needle": (), "ether": ()}
-        self.items_states = {"tube": "", "needle": "", "ether": ""}
         self.collision_counter = 0
+        self.items_taken = []
 
         self.load_structure()
-        # self.randomize_items()
-        self.randomize_via_Item()
+        self.randomize_items()
         self.randomize_start()
         self.set_player_position_on_start(self.start)
-
-    # @property
-    # def start(self):
-    #     return self._start
 
     @property
     def start(self):
@@ -55,7 +41,7 @@ class Labyrinth:
 
     def verify_gatekeeper_contact(self, position):
         """Verify if the player position is in the list _finnish."""
-        return position in self._finish
+        return position in self.finish
 
     def verify_items_contact(self, position):
         """Verify if the player position is in the dict items_position."""
@@ -80,44 +66,23 @@ class Labyrinth:
                         self.items.append((pos_x, pos_y))
                         self.road.append((pos_x, pos_y))
 
-    def randomize_via_Item(self):
-        """It was the goal but..."""
-        for name, position in self.items_position.items():
-            self.item = Item(name, position)
-            if not self.item.position:
-                rnd_choice = random.choice(self.items)
-                if rnd_choice not in self.items_position.values():
-                    self.items_position[name] = rnd_choice
-
-    # def randomize_items(self):
-    #     """docstr"""
-    #     for name in self.items_position.keys():
-    #         if "open" in self.items_position.values():
-    #             self.items_position[name] = random.choice(self.items)
-    #     return self.items_position
+    def randomize_items(self):
+        """Randomize items coordinates"""
+        for name in self.items_position:
+            if not self.items_position[name]:
+                self.items_position[name] = random.choice(self.items)
 
     def randomize_start(self):
-        """docstr"""
-        for name in self.rand_start.keys():
-            if "position" in self.rand_start.values():
+        """Randomize start coordinates"""
+        for name in self.rand_start:
+            if not self.rand_start[name]:
                 self.rand_start[name] = random.choice(self._start)
-        return self.rand_start[name]
-
-    # def find_items(self):
-    #     for name in self.items_position.keys():
-    #         if self.items_position[name] == self.player.pos:
-    #             self.collision_counter += 1
-    #             self.items_states[name] = "found"
-    #             self.items_position[name] = "close"
 
     def find_items(self):
-        """docstr"""
-        for name, position in self.items_position.items():
-            self.item = Item(name, position)
+        """Verify if player is on item."""
+        for name in self.items_position:
             if self.player.pos == self.items_position[name]:
                 self.collision_counter += 1
-                self.items_states[name] = "found"
-                self.new_items[name] = self.items_position[name]
                 self.items_position[name] = ()
 
     def set_player_position_on_start(self, start_pos):
@@ -135,8 +100,8 @@ class Labyrinth:
         self.find_items()
 
         # if self.verify_gatekeeper_contact(self.player.pos)\
-        #  and self.collision_counter == 3:
+        # and self.collision_counter == 3:
         #     self.run = False
         # if self.verify_gatekeeper_contact(self.player.pos)\
-        #  and self.collision_counter < 3:
+        # and self.collision_counter < 3:
         #     self.run = False

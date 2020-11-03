@@ -57,3 +57,4 @@ SYRINGE_UNICODE = "\U0001F489"
 
 WINCLI = colored("Congats, You WIN", "green")
 LOSECLI = colored("You lose, you die\nGAME OVER", "red")
+GOT_SYRINGE = "You got the syringe, you can get out -> "

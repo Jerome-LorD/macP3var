@@ -2,9 +2,8 @@
 import random
 
 
-
 class Labyrinth:
-    """Create the labyrinth and randomize the position of certains elements"""
+    """Create the labyrinth and randomize the position of certain elements"""
 
     def __init__(self, file, player):
 
@@ -13,31 +12,34 @@ class Labyrinth:
 
         self.run = True
 
-        self.wall = []
-        self.road = []
-        self._start = []
+        self.walls = []
+        self.roads = []
+        self._possible_starts = []
         self._finish = []
-        self.items = []
-        self.rand_start = {"start": ()}
+        self.possible_items = []
+        self.randomizable_items = []
+        self._rand_start = {"start": ()}
         self.items_position = {"tube": (), "needle": (), "ether": ()}
         self.collision_counter = 0
         self.items_taken = []
+        self.run_states = ["running", "quit"]
+        self.run_state = 0
 
         self.load_structure()
         self.randomize_items()
         self.randomize_start()
-        self.set_player_position_on_start(self.start)
+        self.set_player_position_on_start(self.starts)
 
     @property
-    def start(self):
-        return self.rand_start["start"]
+    def starts(self):
+        return self._rand_start["start"]
 
     @property
     def finish(self):
         return self._finish
 
     def __contains__(self, position):
-        return position in self.road
+        return position in self.roads
 
     def verify_gatekeeper_contact(self, position):
         """Verify if the player position is in the list _finnish."""
@@ -53,30 +55,33 @@ class Labyrinth:
             for pos_y, line in enumerate(levels):
                 for pos_x, char in enumerate(line):
                     if char == "W":
-                        self.wall.append((pos_x, pos_y))
+                        self.walls.append((pos_x, pos_y))
                     elif char == " ":
-                        self.road.append((pos_x, pos_y))
+                        self.roads.append((pos_x, pos_y))
                     elif char == "s":
-                        self._start.append((pos_x, pos_y))
-                        self.road.append((pos_x, pos_y))
+                        self._possible_starts.append((pos_x, pos_y))
+                        self.roads.append((pos_x, pos_y))
                     elif char == "f":
                         self._finish.append((pos_x, pos_y))
-                        self.road.append((pos_x, pos_y))
+                        self.roads.append((pos_x, pos_y))
                     elif char == ".":
-                        self.items.append((pos_x, pos_y))
-                        self.road.append((pos_x, pos_y))
+                        self.possible_items.append((pos_x, pos_y))
+                        self.randomizable_items.append((pos_x, pos_y))
+                        self.roads.append((pos_x, pos_y))
 
     def randomize_items(self):
         """Randomize items coordinates"""
         for name in self.items_position:
             if not self.items_position[name]:
-                self.items_position[name] = random.choice(self.items)
+                self.items_position[name] =\
+                     random.choice(self.randomizable_items)
+                self.randomizable_items.remove(self.items_position[name])
 
     def randomize_start(self):
         """Randomize start coordinates"""
-        for name in self.rand_start:
-            if not self.rand_start[name]:
-                self.rand_start[name] = random.choice(self._start)
+        for name in self._rand_start:
+            if not self._rand_start[name]:
+                self._rand_start[name] = random.choice(self._possible_starts)
 
     def find_items(self):
         """Verify if player is on item."""
@@ -91,17 +96,26 @@ class Labyrinth:
 
     def update(self, control):
         """Update positions of player"""
-        self.old_pos = self.player.pos
-        self.player.move(control)
 
-        if self.player.pos not in self.road:
-            self.player.pos = self.old_pos
+        self.player.move(control, self.roads)
 
         self.find_items()
 
-        # if self.verify_gatekeeper_contact(self.player.pos)\
-        # and self.collision_counter == 3:
-        #     self.run = False
-        # if self.verify_gatekeeper_contact(self.player.pos)\
-        # and self.collision_counter < 3:
-        #     self.run = False
+        state = self.run_states[self.run_state]
+        if control == "q" or state != "running":
+            self.run_state += 1
+
+        if (
+            self.verify_gatekeeper_contact(self.player.pos)
+            and self.collision_counter == 3
+        ) or state != "running":
+            self.run_state += 1
+
+        if (
+            self.verify_gatekeeper_contact(self.player.pos)
+            and self.collision_counter < 3
+        ) or state != "running":
+            self.run_state += 1
+
+        if state == "quit":
+            self.run = False

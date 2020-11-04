@@ -1,6 +1,3 @@
-import pygame
-from pygame.locals import *
-
 import settings
 from model.labyrinth import Labyrinth
 from model.player import Player
@@ -16,9 +13,9 @@ class Application:
     def __init__(self, choice: str):
         """Init."""
 
-        self.player = Player(0,0)
+        self.player = Player(0, 0)
         self.model = Labyrinth(settings.MAZE_FILE, self.player)
-        
+
         self.choice = choice
 
         if choice == "cli":

@@ -13,7 +13,7 @@ class PYController:
 
         for event in pg.event.get():
             if event.type == QUIT:
-                self.lab.run = False
+                return "q"
             if event.type == KEYDOWN:
                 if event.key == K_LEFT:
                     return "left"

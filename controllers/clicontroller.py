@@ -1,3 +1,6 @@
+import settings
+
+
 class CLIController:
     """Handle controls from keyboard inputs"""
 
@@ -6,17 +9,19 @@ class CLIController:
 
     def handle_control(self):
         """Manage all direction from input"""
-        self.direction = ""
-        board = ["up", "right", "down", "left", "q"]
 
-        self.direction = str(
-            input("Type the direction [right, left, up, down (q to quit)]-> ")
-        )
+        if self.lab.run_state != 0:
+            return "q"
+        else:
+            command = ""
+            board = ["up", "right", "down", "left", "q"]
 
-        if self.direction == "q":
-            print("thx, until next time")
-            self.lab.run = False
-        if self.direction not in board:
-            print("Command not in the board")
-            self.lab.run = True
-        return self.direction
+            command = str(
+                input(settings.INPUT)
+            )
+
+            if command == "q":
+                print(f"\n{settings.THX}")
+            if command not in board:
+                print(settings.NOT_IN_BOARD)
+            return command

@@ -1,7 +1,4 @@
-import os
-
 import pygame as pg
-from pygame.locals import *
 
 import settings
 
@@ -64,23 +61,39 @@ class PYView:
                 self.screen.blit(self.images[name], self.items_pos[name])
             if self.lab.collision_counter == 3:
                 self.screen.blit(self.images["syringe"], settings.SYRINGE_POS)
+        if (
+            self.lab.collision_counter == 3
+            and self.lab.player.pos == self.lab.finish[0]
+        ):
+            self.screen.blit(self.images["macgyver2"], (120, 120))
 
     def display_txt(self):
         """Display texts in the bottom frame"""
-        if self.lab.collision_counter < 3 and self.lab.player.pos == self.lab.finish[0]:
-            return self.font.render(self.text[2], True, settings.RED, settings.BLACK)
+        if self.lab.collision_counter < 3\
+                and self.lab.player.pos == self.lab.finish[0]:
+            self.lab.run_state = 1
+            return self.font.render(
+                self.text[2], True, settings.RED, settings.BLACK
+                )
         elif (
             self.lab.collision_counter == 3
             and not self.lab.player.pos == self.lab.finish[0]
         ):
-            return self.font.render(self.text[1], True, settings.WHITE, settings.BLACK)
+            return self.font.render(
+                self.text[1], True, settings.WHITE, settings.BLACK
+                )
         elif (
             self.lab.collision_counter == 3
             and self.lab.player.pos == self.lab.finish[0]
         ):
-            return self.font.render(self.text[3], True, settings.GREEN, settings.BLACK)
+            self.lab.run_state = 1
+            return self.font.render(
+                self.text[3], True, settings.GREEN, settings.BLACK
+                )
         else:
-            return self.font.render(self.text[0], True, settings.WHITE, settings.BLACK)
+            return self.font.render(
+                self.text[0], True, settings.WHITE, settings.BLACK
+                )
 
     def display(self):
         """Display the game"""
@@ -89,25 +102,28 @@ class PYView:
             pos: name for name, pos in self.lab.items_position.items()
         }
 
-        pg.draw.rect(self.screen, settings.WHITE, settings.CADRE_BOX_RECT, 10)
+        pg.draw.rect(
+            self.screen, settings.WHITE, settings.FRM_BOX, settings.FRAME_WIDTH
+            )
         self.screen.blit(self.display_txt(), settings.TEXT_POSITION)
 
         for pos_y in range(settings.WIDTH):
             for pos_x in range(settings.HEIGHT):
                 position = pos_x, pos_y
-                pygame_pos = pos_x * settings.IMG_SIZE, pos_y * settings.IMG_SIZE
+                pygame_pos =\
+                    pos_x * settings.IMG_SIZE, pos_y * settings.IMG_SIZE
 
                 if position == self.lab.player.pos:
                     surface = self.images["macgyver"]
                 elif position in self.lab.items_position.values():
                     surface = self.images[reversed_items_position[position]]
-                elif position in self.lab.wall:
+                elif position in self.lab.walls:
                     surface = self.images["brick"]
-                elif position == self.lab.start:
+                elif position == self.lab.starts:
                     surface = self.images["start"]
                 elif position in self.lab.finish:
                     surface = self.images["gatekeeper"]
-                elif position in self.lab.road:
+                elif position in self.lab.roads:
                     surface = self.images["ground"]
 
                 self.screen.blit(surface, pygame_pos)

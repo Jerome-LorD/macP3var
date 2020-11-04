@@ -10,8 +10,11 @@ class Player:
     def __eq__(self, other):
         return self.pos == other.pos
 
-    def move(self, direction):
+    def move(self, direction, roads):
+
+        self.old_pos = self.pos
         pos_x, pos_y = self.pos
+
         if direction == "up":
             self.pos = (pos_x, pos_y - 1)
         elif direction == "down":
@@ -20,4 +23,7 @@ class Player:
             self.pos = (pos_x + 1, pos_y)
         elif direction == "left":
             self.pos = (pos_x - 1, pos_y)
+
+        if self.pos not in roads:
+            self.pos = self.old_pos
         return self.pos

@@ -1,89 +1,101 @@
+"""cliview display the game onto the terminal."""
+
+from typing import List, Dict
+
+from model.labyrinth import Labyrinth
+
 import settings
 
 
 class CLIView:
-    """Manage and display all prints"""
+    """Manage and display all prints."""
 
     def __init__(self, lab):
+        """Init."""
+        self.lab: Labyrinth = lab
 
-        self.lab = lab
-
-        self.pic = " "
-        self.items_taken = []
-        self.images = {
+        self.char: str = " "
+        self.items_taken: List[str] = []
+        self.chars: Dict[str, str] = {
             "tube": settings.TUBE_CHAR,
             "needle": settings.NEEDLE_CHAR,
             "ether": settings.ETHER_CHAR,
         }
 
     def display_items_taken(self):
-        """Display items taken and texts"""
-        items = [
-            item
-            for item, pos in self.lab.items_position.items()
-            if not self.lab.items_position[item]
-        ]
-        if items:
-            print(f"{settings.POSSESSION} {' '.join(items)}")
+        """Display items taken and texts."""
+        if len(self.lab.player.bag):
+            items_taken = [self.chars[item.name] for item in self.lab.player.bag]
+            print(f"{settings.POSSESSION} {' '.join(items_taken)}")
 
         if (
-            self.lab.collision_counter == 3
-            and not self.lab.player.pos == self.lab.finish[0]
+            len(self.lab.player.bag) < len(self.lab.items_names)
+            and self.lab.player.pos == self.lab.finish
+        ):
+            self.lab.run_state = 1
+            print(settings.LOSECLI)
+            self.lab.run = False
+
+        elif (
+            len(self.lab.player.bag) == len(self.lab.items_names)
+            and not self.lab.player.pos == self.lab.finish
         ):
             print(f"{settings.GOT_SYRINGE} {settings.SYRINGE_UNICODE}")
-        if self.lab.collision_counter < 3\
-                and self.lab.player.pos == self.lab.finish[0]:
-            print(settings.LOSECLI)
-            self.lab.run_state = 1
 
-        if (
-            self.lab.collision_counter == 3
-            and self.lab.player.pos == self.lab.finish[0]
+        elif (
+            len(self.lab.player.bag) == len(self.lab.items_names)
+            and self.lab.player.pos == self.lab.finish
         ):
+            self.lab.run_state = 1
             print(f"{settings.WINCLI} {settings.SYRINGE_UNICODE}")
-            self.lab.run_state = 1
+            self.lab.run = False
 
-        if (
-            self.lab.collision_counter < 3
-            and not self.lab.player.pos == self.lab.finish[0]
-            and self.lab.run_state == 0
-        ):
+        else:
             print(settings.ADVICE)
 
     def header(self):
-        """Display header"""
-        print(
-            f"\n{settings.DASHES}\n{settings.HEADER}\n\
-{settings.DASHES}"
-        )
+        """Display the header."""
+        print(f"\n{settings.DASHES}\n{settings.HEADER}\n{settings.DASHES}")
 
-    def display(self):
-        """Display the game"""
+    def display_items(self, position: tuple) -> str:
+        """Display items.
+
+        Args:
+            position (tuple): A position in the labyrinth.
+
+        Returns:
+            str: The char associated with the name to print.
+
+        """
+        for item in self.lab.items:
+            if position == item.coords:
+                self.char = self.chars[item.name]
+        return self.char
+
+    def display(self) -> bool:
+        """Display the game."""
         self.header()
-
-        reversed_items_position = {
-            pos: name for name, pos in self.lab.items_position.items()
-        }
 
         for pos_y in range(settings.WIDTH):
             for pos_x in range(settings.HEIGHT):
                 position = pos_x, pos_y
 
                 if position == self.lab.player.pos:
-                    self.pic = settings.PLAYER_CHAR
-                elif position in self.lab.items_position.values():
-                    self.pic = self.images[reversed_items_position[position]]
+                    self.char = settings.PLAYER_CHAR
                 elif position in self.lab.walls:
-                    self.pic = "X"
+                    self.char = "X"
                 elif position == self.lab.starts:
-                    self.pic = "S"
-                elif position in self.lab.finish:
-                    self.pic = "F"
+                    self.char = "S"
+                elif position == self.lab.finish:
+                    self.char = "F"
                 else:
-                    self.pic = " "
+                    self.char = " "
 
-                print(self.pic, end=" ")
+                self.display_items(position)
+
+                print(self.char, end=" ")
             print()
         print()
 
         self.display_items_taken()
+        return self.lab.run

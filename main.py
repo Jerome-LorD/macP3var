@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """Main application."""
 
 import settings
@@ -5,7 +6,7 @@ from app import Application
 
 
 def main():
-    """Entry point of the Maze application."""
+    """Entry point of the Labyrinth application."""
     choices = {"1": "cli", "2": "pygame"}
     choice = input(settings.CHOICE)
 

@@ -1,5 +1,4 @@
 #! /usr/bin/python
-# Python Enhancement Proposals (propositions d'amélioration de Python)
 """labyrinth constructs and updates the game."""
 
 import random

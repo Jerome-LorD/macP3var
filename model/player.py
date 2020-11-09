@@ -1,17 +1,36 @@
 #! /usr/bin/python
+"""player module recive order to move from controllers modules."""
+
+from typing import List, Tuple
+
+from model.labyrinth import Item
 
 
 class Player:
     """Manage player's position from keyboard inputs."""
 
-    def __init__(self, x, y):
-        self.pos = x, y
+    def __init__(self, x: int, y: int) -> None:
+        """Init x, y.
 
-    def __eq__(self, other):
-        return self.pos == other.pos
+        Args:
+            x (int): Abscissa
+            y (int): Ordinate
 
-    def move(self, direction, roads):
+        """
+        self.pos: Tuple[int, int] = x, y
 
+        self.bag: List[Item] = []
+
+    def move(self, direction: str, roads: tuple) -> tuple:
+        """Verify if player is in the roads and return direction from handle control.
+
+        Args:
+            direction (str): A str who represents the direction.
+
+        Returns:
+            tuple: The player's position.
+
+        """
         self.old_pos = self.pos
         pos_x, pos_y = self.pos
 

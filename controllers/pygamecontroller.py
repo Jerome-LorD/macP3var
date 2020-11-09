@@ -1,17 +1,17 @@
-import pygame as pg
-from pygame.locals import *
+"""Pygamecontroller module transmits commands to the player module."""
+
+import pygame
+from pygame import QUIT, KEYDOWN, K_LEFT, K_RIGHT, K_DOWN, K_UP
+
+pygame.init()
 
 
 class PYController:
-    """Handle controls from key events"""
-
-    def __init__(self, labyrinth):
-        self.lab = labyrinth
-        pg.init()
+    """Handle controls from keyboard events."""
 
     def handle_control(self):
-
-        for event in pg.event.get():
+        """Handle control from directional arrow on keyboard."""
+        for event in pygame.event.get():
             if event.type == QUIT:
                 return "q"
             if event.type == KEYDOWN:

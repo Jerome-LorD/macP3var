@@ -3,6 +3,8 @@
 import pygame
 from pygame import QUIT, KEYDOWN, K_LEFT, K_RIGHT, K_DOWN, K_UP
 
+import settings
+
 pygame.init()
 
 
@@ -13,13 +15,13 @@ class PYController:
         """Handle control from directional arrow on keyboard."""
         for event in pygame.event.get():
             if event.type == QUIT:
-                return "q"
+                return settings.QUIT
             if event.type == KEYDOWN:
                 if event.key == K_LEFT:
-                    return "left"
+                    return settings.LEFT
                 elif event.key == K_UP:
-                    return "up"
+                    return settings.UP
                 elif event.key == K_RIGHT:
-                    return "right"
+                    return settings.RIGHT
                 elif event.key == K_DOWN:
-                    return "down"
+                    return settings.DOWN

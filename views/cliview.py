@@ -83,13 +83,13 @@ class CLIView:
                 if position == self.lab.player.pos:
                     self.char = settings.PLAYER_CHAR
                 elif position in self.lab.walls:
-                    self.char = "X"
+                    self.char = settings.WALL_CHAR
                 elif position == self.lab.starts:
-                    self.char = "S"
+                    self.char = settings.START_CHAR
                 elif position == self.lab.finish:
-                    self.char = "F"
+                    self.char = settings.FINISH_CHAR
                 else:
-                    self.char = " "
+                    self.char = settings.ROAD_CHAR
 
                 self.display_items(position)
 

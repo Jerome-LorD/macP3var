@@ -40,6 +40,7 @@ FRM_BOX = 0, 603, 600, 53
 STANDARD_IMG_RECT = (0, 0, 40, 40)
 
 FRAME_WIDTH = 10
+
 ETHER_POS = (455, 610)
 NEEDLE_POS = (500, 610)
 TUBE_POS = (545, 610)
@@ -48,16 +49,23 @@ IMG_WIN_POS = (120, 120)
 
 IMG_SIZE = 40
 
-START_CHAR = "s"
-WALL_CHAR = "W"
+START_CHAR = "S"
+WALL_CHAR = "X"
 ROAD_CHAR = " "
-FINNISH_CHAR = "f"
+FINISH_CHAR = "F"
+POSSIBLE_ITEMS_CHAR = "."
 PLAYER_CHAR = colored("@", "yellow")
 TUBE_CHAR = colored("$", "red")
 NEEDLE_CHAR = colored("%", "red")
 ETHER_CHAR = colored("#", "red")
 SYRINGE_UNICODE = "\U0001F489"
+UP = "up"
+DOWN = "down"
+LEFT = "left"
+RIGHT = "right"
+QUIT = "q"
 
+CHOICES = {"1": "cli", "2": "pygame"}
 CHOICE = "Type a choice:\n1. cli\n2. pygame - [1 or 2]-> "
 INPUT = "Type the direction [right, left, up, down (q to quit)]-> "
 NOT_IN_BOARD = "Command not in the board"

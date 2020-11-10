@@ -2,9 +2,11 @@
 
 import pygame as pg
 
-from typing import Dict, Tuple, Any
+from pathlib import Path
+from typing import Dict, Tuple
 
 from model.labyrinth import Labyrinth
+
 import settings
 
 
@@ -14,6 +16,7 @@ class PYView:
     def __init__(self, lab):
         """Init."""
         pg.init()
+
         self.lab: Labyrinth = lab
 
         self.items_pos: Dict[str, tuple] = {
@@ -35,7 +38,7 @@ class PYView:
 
         self.font = self.load_font(settings.FONT_FILE)
 
-        self.images: Dict[str, Any] = {
+        self.images: Dict[str, pg.Surface] = {
             "macgyver": self.load_image(settings.IMG_DIR / "macgyver.png"),
             "macgyver2": self.load_image(settings.IMG_DIR / "macgyver2.png"),
             "tube": self.load_image(settings.IMG_DIR / "tube2.png"),
@@ -48,14 +51,14 @@ class PYView:
             "ground": self.load_image(settings.IMG_DIR / "ground.png"),
         }
 
-    def load_font(self, path: str) -> pg.font:
+    def load_font(self, path: Path) -> pg.font.Font:
         """Load font."""
         try:
             return pg.font.Font(str(path), settings.FONT_SIZE)
         except FileNotFoundError:
             raise SystemExit(f"Cannot load font: {path}")
 
-    def load_image(self, path: str) -> pg.Surface:
+    def load_image(self, path: Path) -> pg.Surface:
         """Load image."""
         try:
             return pg.image.load(str(path)).convert_alpha()

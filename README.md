@@ -11,9 +11,10 @@ This application is standalone, to use it you must follow these indications:
 
 Note: Only if **termcolor** gives you a message about `bdist_wheel`, you must also install **wheel** in your virtual environment:
 `pip install wheel`
+
 --------------------------
 
-## Labyrinth base
+## The labyrinth base
 
 First of all, we had to show how to make the level structure.
 

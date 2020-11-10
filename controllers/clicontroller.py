@@ -10,11 +10,17 @@ class CLIController:
     def handle_control(self) -> str:
         """Manage and return command from input."""
         command = ""
-        board = ["up", "right", "down", "left", "q"]
+        board = [
+            settings.UP,
+            settings.RIGHT,
+            settings.DOWN,
+            settings.LEFT,
+            settings.QUIT,
+        ]
 
         command = input(settings.INPUT)
 
-        if command == "q":
+        if command == settings.QUIT:
             print(f"\n{settings.THX}")
         if command not in board:
             print(settings.NOT_IN_BOARD)

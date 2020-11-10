@@ -9,8 +9,8 @@ This application is standalone, to use it you must follow these indications:
 * git clone link
 * create a virtual environment in which you must install the modules from the requirements.txt file
 
-Note: Only if *termcolor* gives you a message about `bdist_wheel`, you must also install *wheel* in your virtual environment:
-pip install wheel
+Note: Only if **termcolor** gives you a message about `bdist_wheel`, you must also install **wheel** in your virtual environment:
+`pip install wheel`
 
 First of all, we had to show how to make the level structure.
 

@@ -12,7 +12,7 @@ from controllers.pygamecontroller import PYController
 
 
 class Application:
-    """Macgyver application class."""
+    """MacGyver Application class."""
 
     def __init__(self, choice: str):
         """Init.
@@ -23,7 +23,7 @@ class Application:
         self.player: Player = Player(0, 0)
         self.model: Labyrinth = Labyrinth(settings.MAZE_FILE, self.player)
 
-        self.choice = choice
+        self.choice: str = choice
 
         if choice == "cli":
             self.view: Union[PYView, CLIView] = CLIView(self.model)

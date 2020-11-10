@@ -5,6 +5,8 @@ from typing import List, Tuple
 
 from model.labyrinth import Item
 
+import settings
+
 
 class Player:
     """Manage player's position from keyboard inputs."""
@@ -34,13 +36,13 @@ class Player:
         self.old_pos = self.pos
         pos_x, pos_y = self.pos
 
-        if direction == "up":
+        if direction == settings.UP:
             self.pos = (pos_x, pos_y - 1)
-        elif direction == "down":
+        elif direction == settings.DOWN:
             self.pos = (pos_x, pos_y + 1)
-        elif direction == "right":
+        elif direction == settings.RIGHT:
             self.pos = (pos_x + 1, pos_y)
-        elif direction == "left":
+        elif direction == settings.LEFT:
             self.pos = (pos_x - 1, pos_y)
 
         if self.pos not in roads:

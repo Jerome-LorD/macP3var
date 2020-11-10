@@ -7,7 +7,7 @@ from app import Application
 
 def main():
     """Entry point of the Labyrinth application."""
-    choices = {"1": "cli", "2": "pygame"}
+    choices = settings.CHOICES
     choice = input(settings.CHOICE)
 
     if choice not in choices:

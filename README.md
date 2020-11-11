@@ -1,6 +1,6 @@
 # P3 MacGyver project
 
-MacGyver - [Help him out]" is a little game made with python and pygame. This is a simple level where the goal is to help MacGyver out with the collection of these items: an ether bottle, a needle and a small tube to make a syringe and put the guardian to sleep.
+MacGyver - [Help him out] is a little game made with python and pygame. This is a simple level where the goal is to help MacGyver out with the collection of these items: an ether bottle, a needle and a small tube to make a syringe and put the guardian to sleep.
 
 This project is my first contribution to Openclassroms on the context of learning code with this training: "application developer - python".
 

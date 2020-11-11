@@ -36,7 +36,7 @@ class PYView:
             "win": "Congrats, you win! Free to get out",
         }
 
-        self.font = self.load_font(settings.FONT_FILE)
+        self.font: pg.font.Font = self.load_font(settings.FONT_FILE)
 
         self.images: Dict[str, pg.Surface] = {
             "macgyver": self.load_image(settings.IMG_DIR / "macgyver.png"),
@@ -137,7 +137,7 @@ class PYView:
                     surface = self.images["macgyver"]
                 elif position in self.lab.walls:
                     surface = self.images["brick"]
-                elif position == self.lab.starts:
+                elif position == self.lab.start:
                     surface = self.images["start"]
                 elif position == self.lab.finish:
                     surface = self.images["gatekeeper"]

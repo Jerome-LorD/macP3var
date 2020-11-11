@@ -1,13 +1,18 @@
 #! /usr/bin/python
 """labyrinth constructs and updates the game."""
-
 import random
 
 from pathlib import Path
-
 from typing import List, Tuple
 
-import settings
+from settings import (
+    WALL_CHAR,
+    ROAD_CHAR,
+    START_CHAR,
+    FINISH_CHAR,
+    POSSIBLE_ITEMS_CHAR,
+    QUIT_APP,
+)
 
 
 class Item:
@@ -58,17 +63,17 @@ class Labyrinth:
         with open(self.level_txt) as level:
             for pos_y, line in enumerate(level):
                 for pos_x, char in enumerate(line):
-                    if char == settings.WALL_CHAR:
+                    if char == WALL_CHAR:
                         self.walls.append((pos_x, pos_y))
-                    elif char == settings.ROAD_CHAR:
+                    elif char == ROAD_CHAR:
                         self.roads.append((pos_x, pos_y))
-                    elif char == settings.START_CHAR:
+                    elif char == START_CHAR:
                         self.possible_starts.append((pos_x, pos_y))
                         self.roads.append((pos_x, pos_y))
-                    elif char == settings.FINISH_CHAR:
+                    elif char == FINISH_CHAR:
                         self.finish = (pos_x, pos_y)
                         self.roads.append((pos_x, pos_y))
-                    elif char == settings.POSSIBLE_ITEMS_CHAR:
+                    elif char == POSSIBLE_ITEMS_CHAR:
                         self.possible_items.append((pos_x, pos_y))
                         self.roads.append((pos_x, pos_y))
 
@@ -106,7 +111,7 @@ class Labyrinth:
             self.run_state += 1
 
         state = self.run_states[self.run_state]
-        if control == settings.QUIT:
+        if control == QUIT_APP:
             self.run = False
 
         if state == "quit":

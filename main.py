@@ -1,14 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Main application."""
 
-import settings
+from settings import CHOICES, CHOICE
 from app import Application
 
 
 def main():
     """Entry point of the Labyrinth application."""
-    choices = settings.CHOICES
-    choice = input(settings.CHOICE)
+    choices = CHOICES
+    choice = input(CHOICE)
 
     if choice not in choices:
         choice = "1"

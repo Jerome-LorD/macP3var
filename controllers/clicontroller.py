@@ -1,7 +1,7 @@
 """Clicontroller module transmits commands to the player module."""
 
 
-import settings
+from settings import UP, RIGHT, DOWN, LEFT, QUIT_APP, INPUT, THX, NOT_IN_BOARD
 
 
 class CLIController:
@@ -10,18 +10,12 @@ class CLIController:
     def handle_control(self) -> str:
         """Manage and return command from input."""
         command = ""
-        board = [
-            settings.UP,
-            settings.RIGHT,
-            settings.DOWN,
-            settings.LEFT,
-            settings.QUIT,
-        ]
+        board = [UP, RIGHT, DOWN, LEFT, QUIT_APP]
 
-        command = input(settings.INPUT)
+        command = input(INPUT)
 
-        if command == settings.QUIT:
-            print(f"\n{settings.THX}")
+        if command == QUIT_APP:
+            print(f"\n{THX}")
         if command not in board:
-            print(settings.NOT_IN_BOARD)
+            print(NOT_IN_BOARD)
         return command

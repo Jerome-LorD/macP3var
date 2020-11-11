@@ -2,7 +2,7 @@
 
 from typing import Union
 
-import settings
+from settings import MAZE_FILE
 from model.labyrinth import Labyrinth
 from model.player import Player
 from views.cliview import CLIView
@@ -21,7 +21,7 @@ class Application:
             choice (str): the value of the choices's dict -> "pygame" or "cli".
         """
         self.player: Player = Player(0, 0)
-        self.model: Labyrinth = Labyrinth(settings.MAZE_FILE, self.player)
+        self.model: Labyrinth = Labyrinth(MAZE_FILE, self.player)
 
         self.choice: str = choice
 

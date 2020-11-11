@@ -4,7 +4,8 @@
 import random
 
 from pathlib import Path
-from typing import List, Dict, Tuple, Any
+
+from typing import List, Tuple
 
 import settings
 
@@ -38,10 +39,10 @@ class Labyrinth:
 
         self.walls: List[Tuple[int, int]] = []
         self.roads: List[Tuple[int, int]] = []
-        self._possible_starts: List[Tuple[int, int]] = []
-        self._finish: List[Tuple[int, int]] = []
+        self.possible_starts: List[Tuple[int, int]] = []
+        self.finish: Tuple[()] = ()
         self.possible_items: List[Tuple[int, int]] = []
-        self._rand_start: Dict[str, Any] = {"coord": ()}
+        self.start: Tuple[()] = ()
         self.items_names: List[str] = ["tube", "needle", "ether"]
         self.items: List[Item] = []
         self.run_states: List[str] = ["running", "process_quit", "quit"]
@@ -50,17 +51,7 @@ class Labyrinth:
         self.load_structure()
         self.randomize_items()
         self.randomize_start()
-        self.set_player_position_on_start(self.starts)
-
-    @property
-    def starts(self) -> Tuple[int, int]:
-        """Return randomized start position."""
-        return self._rand_start["coord"]
-
-    @property
-    def finish(self) -> Tuple[int, int]:
-        """Return the guard position."""
-        return self._finish[0]
+        self.set_player_position_on_start(self.start)
 
     def load_structure(self):
         """Load file structure and create lists of coordinates."""
@@ -72,10 +63,10 @@ class Labyrinth:
                     elif char == settings.ROAD_CHAR:
                         self.roads.append((pos_x, pos_y))
                     elif char == settings.START_CHAR:
-                        self._possible_starts.append((pos_x, pos_y))
+                        self.possible_starts.append((pos_x, pos_y))
                         self.roads.append((pos_x, pos_y))
                     elif char == settings.FINISH_CHAR:
-                        self._finish.append((pos_x, pos_y))
+                        self.finish = (pos_x, pos_y)
                         self.roads.append((pos_x, pos_y))
                     elif char == settings.POSSIBLE_ITEMS_CHAR:
                         self.possible_items.append((pos_x, pos_y))
@@ -83,11 +74,10 @@ class Labyrinth:
 
     def randomize_start(self):
         """Randomize start coordinates."""
-        for name in self._rand_start:
-            if not self._rand_start[name]:
-                self._rand_start[name] = random.choice(self._possible_starts)
+        if not self.start:
+            self.start = random.choice(self.possible_starts)
 
-    def set_player_position_on_start(self, start_pos: Tuple[int, int]):
+    def set_player_position_on_start(self, start_pos):
         """Set player position on start randomized coordinate."""
         self.player.pos = start_pos
 
@@ -116,7 +106,7 @@ class Labyrinth:
             self.run_state += 1
 
         state = self.run_states[self.run_state]
-        if control == "q":
+        if control == settings.QUIT:
             self.run = False
 
         if state == "quit":

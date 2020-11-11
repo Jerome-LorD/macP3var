@@ -84,7 +84,7 @@ class CLIView:
                     self.char = settings.PLAYER_CHAR
                 elif position in self.lab.walls:
                     self.char = settings.WALL_CHAR
-                elif position == self.lab.starts:
+                elif position == self.lab.start:
                     self.char = settings.START_CHAR
                 elif position == self.lab.finish:
                     self.char = settings.FINISH_CHAR

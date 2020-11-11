@@ -4,9 +4,11 @@ MacGyver - [Help him out]" is a little game made with python and pygame. This is
 
 This project is my first contribution to Openclassroms on the context of learning code with this training: "application developer - python".
 
+--------------------------
+
 This application is standalone, to use it you must follow these indications:
 * by clicking on the green button "Code", get the link and
-* git clone link
+* `git clone link`
 * create a virtual environment in which you must install the modules from the requirements.txt file
 
 Note: Only if **termcolor** gives you a message about `bdist_wheel`, you must also install **wheel** in your virtual environment:

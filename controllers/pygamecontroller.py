@@ -1,11 +1,8 @@
 """Pygamecontroller module transmits commands to the player module."""
-
 import pygame
 from pygame import QUIT, KEYDOWN, K_LEFT, K_RIGHT, K_DOWN, K_UP
 
 from settings import QUIT_APP, LEFT, UP, RIGHT, DOWN
-
-pygame.init()
 
 
 class PYController:

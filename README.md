@@ -6,6 +6,8 @@ This project is my first contribution to Openclassroms on the context of learnin
 
 --------------------------
 
+**Python 3.5+** compatible (typing module)
+
 This application is standalone, to use it you must follow these indications:
 * by clicking on the green button "Code", get the link and
 * `git clone link`

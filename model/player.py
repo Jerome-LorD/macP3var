@@ -1,5 +1,5 @@
 """player module recive order to move from controllers modules."""
-from typing import List, Tuple
+from typing import List
 
 from model.labyrinth import Item
 from settings import UP, DOWN, RIGHT, LEFT
@@ -16,7 +16,7 @@ class Player:
             y (int): Ordinate
 
         """
-        self.pos: Tuple[int, int] = x, y
+        self.pos = x, y
 
         self.bag: List[Item] = []
 

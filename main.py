@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Main application."""
 
 from settings import CHOICES, CHOICE

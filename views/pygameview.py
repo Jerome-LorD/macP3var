@@ -37,7 +37,8 @@ class PYView:
 
     def __init__(self, lab):
         """Init."""
-        pg.init()
+        pg.font.init()
+        pg.display.init()
 
         self.lab: Labyrinth = lab
 
